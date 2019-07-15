@@ -1,18 +1,22 @@
 <template>
   <div class="home">
-    <p @click="btn">奥迪</p>
-    <Mock v-show="isTrue" :List="list" />
+    <myList :list="listArr" />
+    <sideBar :title="titleArr" />
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import Mock from "@/components/mock.vue";
 import { mapState, mapActions, mapMutations } from "vuex";
+import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import myList from "@/components/myList.vue"; // @ is an alias to /src
+import sideBar from "@/components/sideBar.vue"; // @ is an alias to /src
 export default Vue.extend({
   name: "home",
   components: {
-    Mock
+    HelloWorld,
+    myList,
+    sideBar
   },
   data() {
     let isTrue: boolean = false;
@@ -28,12 +32,15 @@ export default Vue.extend({
   },
   computed: {
     ...mapState({
-      list: state => state.index.list
+      list: state => state.index.list,
+      titleArr: state => state.index.titleArr,
+      listArr: state => state.index.listArr
     })
   },
   methods: {
     ...mapActions({
-      Tabs: "index/Get"
+      Tabs: "index/Get",
+      getList: "index/getList"
     }),
     btn(): any {
       this.isTrue = !this.isTrue;
@@ -44,7 +51,8 @@ export default Vue.extend({
       });
     }
   },
-  created() {},
-  mounted() {}
+  mounted() {
+    this.getList();
+  }
 });
 </script>
