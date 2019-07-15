@@ -1,18 +1,50 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App"/>
+    <p @click="btn">奥迪</p>
+    <Mock v-show="isTrue" :List="list" />
   </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue';
-import HelloWorld from '@/components/HelloWorld.vue'; // @ is an alias to /src
-
+import Vue from "vue";
+import Mock from "@/components/mock.vue";
+import { mapState, mapActions, mapMutations } from "vuex";
 export default Vue.extend({
-  name: 'home',
+  name: "home",
   components: {
-    HelloWorld,
+    Mock
   },
+  data() {
+    let isTrue: boolean = false;
+    // let Lists: number[] = [];
+    let MasterID: number = 97;
+    let phone: string = "_1563176334484";
+    return {
+      isTrue,
+      // Lists,
+      MasterID,
+      phone
+    };
+  },
+  computed: {
+    ...mapState({
+      list: state => state.index.list
+    })
+  },
+  methods: {
+    ...mapActions({
+      Tabs: "index/Get"
+    }),
+    btn(): any {
+      this.isTrue = !this.isTrue;
+      console.log(this.isTrue);
+      this.Tabs({
+        MasterID: this.MasterID,
+        phone: this.phone
+      });
+    }
+  },
+  created() {},
+  mounted() {}
 });
 </script>

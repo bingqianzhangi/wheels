@@ -9,8 +9,8 @@ const getters = {
 //异步改变
 const actions = {
   async Get({ commit }, payload) {
-      // console.log('sa',payload)
-    let data = await GetList(payload);
+      console.log('sa',payload)
+    let data = await GetList(params);
     commit('SetTabList', data)
   }
 }
@@ -18,7 +18,7 @@ const actions = {
 const mutations = {
   SetTabList(state, payload) {
     console.log('pat',payload)
-    state.list = payload.data[0];
+    state.list = payload.data;
     console.log("state.list...", state.list)
   }
  
