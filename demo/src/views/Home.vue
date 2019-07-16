@@ -16,16 +16,29 @@ import myList from '@/components/myList.vue'; // @ is an alias to /src
 import sideBar from '@/components/sideBar.vue'; // @ is an alias to /src
 
 export default Vue.extend({
-  name: 'home',
+  name: "home",
   components: {
     HelloWorld,
     myList,
     sideBar
   },
+  data() {
+    let isTrue: boolean = false;
+    // let Lists: number[] = [];
+    let MasterID: number = 97;
+    let phone: string = "_1563176334484";
+    return {
+      isTrue,
+      // Lists,
+      MasterID,
+      phone
+    };
+  },
   computed: {
     ...mapState({
-      titleArr:state=>state.index.titleArr,
-      listArr:state=>state.index.listArr
+      list: state => state.index.list,
+      titleArr: state => state.index.titleArr,
+      listArr: state => state.index.listArr
     })
   },
   methods: {
