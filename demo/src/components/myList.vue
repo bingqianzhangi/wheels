@@ -1,28 +1,103 @@
 <template>
-    <div>
-        <ul v-for="(item, index) in list" :key="index">
+    <div class="list">
+        <div v-for="(item, index) in list" :key="index">
             <p>{{index}}</p>
-            <li v-for="(value) in item" :key="value.MasterID">
+            <ul>
+              <li v-for="(value) in item" :key="value.MasterID" class="border-bottom" @click="btn(value.MasterID)" >
                 <img :src="value.CoverPhoto" :alt="value.Name">
                 <span>{{value.Name}}</span>
-            </li>
-        </ul>
+              </li>
+            </ul>
+        </div>
+        <Mock class='mock' v-show="isTrue" :List="Lists" />
     </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from "vue";
+import Mock from "./mock.vue";
+import { mapState, mapActions, mapMutations } from "vuex";
 export default Vue.extend({
     props: {
         list: {
             type: Object,
-            value: {}
+            value: {},
+            list: Array
         }
+    },
+    components: {
+    Mock
+    },
+    data() {
+    let isTrue: boolean = false;
+    // let Lists: number[] = [];
+    let MasterID: number = 97;
+    let phone: string = "_1563176334484";
+    return {
+      isTrue,
+      // Lists,
+      MasterID,
+      phone
+    };
+  },
+  computed: {
+    ...mapState({
+      Lists: state => state.index.list
+    })
+  },
+  methods: {
+    ...mapActions({
+      Tabs: "index/Get"
+    }),
+    btn(id:number): any {
+      this.isTrue =true;
+      console.log(this.isTrue);
+      this.Tabs({
+        MasterID: id,
+        phone: this.phone
+      });
     }
+  }
 })
 </script>
 
 
 <style lang="scss" scoped>
-
+@import '../scss/global.scss';
+.list{
+  height: 100%;
+  overflow-y: scroll;
+  >div{
+    p{
+      font-size: .28rem;
+      line-height: .4rem;
+      background: #f4f4f4;
+      padding-left: .3rem;
+      color: #aaa;
+    }
+    ul{
+      margin: 0 .3rem;
+      background: #fff;
+      li{
+        height: $brand-height; 
+        line-height: $brand-height;
+        display: flex;
+        align-items: center;
+        img{
+          height: .8rem;
+        }
+        span{
+          font-size: .32rem;
+          margin-left: .4rem;
+        }
+        &:last-child:after{
+          display: none;
+        }
+      }
+    }
+  }
+}
+.mock{
+  z-index:9999
+}
 </style>

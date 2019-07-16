@@ -26,14 +26,14 @@ export default Vue.extend({
   },
   computed: {
     ...mapState({
-      Lists: state => state.list.list
+      Lists: (state:any) => state.list.list
     })
   },
   methods: {
     ...mapActions({
       Tabs: "list/GetList"
     }),
-    btn(id): any {
+    btn(id:number): any {
       this.Tabs({
         SerialID: id,
         phone: this.phone
@@ -41,11 +41,10 @@ export default Vue.extend({
     }
   }
 });
-</script>
+</script> 
 
 <style lang="scss" scoped>
 .right {
-  transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
   width: 75%;
   position: fixed;
   top: 0;
@@ -61,7 +60,6 @@ export default Vue.extend({
     margin-left: 1px;
     font-size: 0.28rem;
     line-height: 0.48rem;
-    background: #f2f2f2;
     padding-left: 0.3rem;
     color: #717171;
   }

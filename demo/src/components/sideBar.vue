@@ -1,5 +1,8 @@
 <template>
-  <ul>
+  <ul
+    @touchstart="touchStart"
+    @touchmove="touchMove"
+    @touchend="touchEnd">
     <li v-for="(item) in title" :key="item">{{item}}</li>
   </ul>
 </template>
@@ -12,7 +15,24 @@
         type: Array,
         value: []
       }
-    }
+    },
+    data() {
+      return {
+        current:'',
+        isTouch:false
+      }
+    },
+    methods: {
+      touchStart(e: Event):void{
+        this.isTouch = true;
+      },
+      touchMove(e: Event): void{
+        console.log(e)
+      },
+      touchEnd(e: Event): void{
+        this.isTouch = false;
+      }
+    },
   })
 </script>
 
@@ -32,6 +52,7 @@
   li {
     color: #666;
     font-weight: 500;
-    padding: .02rem .1rem;
+    font-size: .24rem;
+    padding: .08rem .1rem;
   }
 </style>
