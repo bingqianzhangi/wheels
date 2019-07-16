@@ -1,7 +1,17 @@
 <template>
-  <ul>
-    <li v-for="(item) in title" :key="item">{{item}}</li>
-  </ul>
+  <div>
+    <ul
+      @touchstart="touchStart"
+      @touchmove="touchMove"
+      @touchend="touchEnd">
+      <li v-for="(item,index) in title" 
+      :key="item" 
+      :class="current==item?'active':''"
+      @click="scrollLocation(item,index)"
+      >{{item}}</li>
+    </ul>
+    <span class="letter" v-if="isTouch">{{current}}</span>
+  </div>
 </template>
 
 <script lang="ts">
@@ -12,6 +22,42 @@
         type: Array,
         value: []
       }
+    },
+    data() {
+      return {
+        current:'',
+        isTouch:false
+      }
+    },
+    methods: {
+      touchStart(e: Event):void{
+        this.isTouch = true;
+      },
+      touchMove(e: Event): void{
+        let pageY = e.touches[0].pageY;
+        let letterHeight = 0.4*window.innerWidth/750*100;
+        let letterOffsetTop = (window.innerHeight-letterHeight*this.title.length)/2;
+        let letterIndex = Math.floor((pageY - letterOffsetTop)/letterHeight);
+        //处理上边界
+        if(letterIndex<0){
+          letterIndex = 0;
+        }
+        //处理下边界
+        if(letterIndex>this.title.length-1){
+          letterIndex = this.title.length-1;
+        }
+        this.current = this.title[letterIndex];
+        // console.log('letter...',this.title[letterIndex])
+        this.$bus.$emit('bscroll',this.title[letterIndex]);
+      },
+      touchEnd(e: Event): void{
+        this.isTouch = false;
+        this.current = '';
+      },
+      scrollLocation(item,ind){
+        this.current = item;
+        this.$bus.$emit('scrollL',item,ind);
+      },
     }
   })
 </script>
@@ -28,10 +74,33 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    text-align:center;
   }
   li {
     color: #666;
     font-weight: 500;
-    padding: .02rem .1rem;
+    font-size: .24rem;
+    padding: 0 .1rem;
+    width: .4rem;
+    height: .4rem;
+    line-height: .4rem;
+  }
+  .active{
+    font-size: .36rem;
+    // padding-right: .5rem;
+  }
+  .letter{
+    width: 1.5rem;
+    height: 1.5rem;
+    background: rgba(0,0,0,.6);
+    border-radius: .1rem;
+    top: 50%;
+    left: 50%;
+    position: fixed;
+    color: #fff;
+    font-size: .6rem;
+    text-align: center;
+    line-height: 1.5rem;
+    transform: translate3d(-50%,-50%,0);
   }
 </style>
