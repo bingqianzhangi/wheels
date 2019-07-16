@@ -1,95 +1,52 @@
 <template>
-  <div class="list">
-    <div v-for="(item,index) in list" :key="index">
-      <p>{{item.code}}</p>
-      <ul v-for="(v,i) in item.Spelling" :key="v.MasterID">
-        <li @click="btn(v.MasterID)">
-          <img :src="v.CoverPhoto" alt />
-          <span>{{v.Name}}</span>
-        </li>
-      </ul>
+    <div class="list">
+        <ul v-for="(item, index) in list" :key="index">
+            <p>{{index}}</p>
+            <li v-for="(value) in item" :key="value.MasterID">
+                <img :src="value.CoverPhoto" :alt="value.Name">
+                <span>{{value.Name}}</span>
+            </li>
+        </ul>
     </div>
-    <Mock v-show="isTrue" :List="Lists" />
-  </div>
 </template>
 
 <script lang="ts">
-import Vue from "vue";
-import Mock from "./mock.vue";
-import { mapState, mapActions, mapMutations } from "vuex";
+import Vue from 'vue'
 export default Vue.extend({
-  name: "myList",
-  props: {
-    list: Array
-  },
-  components: {
-    Mock
-  },
-  data() {
-    let isTrue: boolean = false;
-    // let Lists: number[] = [];
-    let MasterID: number = 97;
-    let phone: string = "_1563176334484";
-    return {
-      isTrue,
-      // Lists,
-      MasterID,
-      phone
-    };
-  },
-  computed: {
-    ...mapState({
-      Lists: state => state.index.list
-    })
-  },
-  methods: {
-    ...mapActions({
-      Tabs: "index/Get"
-    }),
-    btn(id): any {
-      this.isTrue =true;
-      console.log(this.isTrue);
-      this.Tabs({
-        MasterID: id,
-        phone: this.phone
-      });
+    props: {
+        list: {
+            type: Object,
+            value: {}
+        }
     }
-  }
-});
+})
 </script>
 
-<style lang="scss">
-.list {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  > div {
+
+<style lang="scss" scoped>
+  .list{
     width: 100%;
-    p {
-      width: 100%;
-      font-size: 0.28rem;
-      line-height: 0.4rem;
-      background: #f4f4f4;
-      padding-left: 0.3rem;
-      color: #aaa;
-    }
-    ul {
-      margin: 0 0.3rem;
-      li {
+    overflow: hidden;
+    ul{
+      p{
+        font-size: .28rem;
+        line-height: .4rem;
+        background: #f4f4f4;
+        padding-left: .3rem;
+        color: #aaa;
+      }
+      li{
         height: 1rem;
         box-sizing: border-box;
         border-bottom: 1px solid #ddd;
-        display: flex;
-        align-items: center;
-        img {
-          height: 0.8rem;
+        img{
+          height: .8rem;
         }
-        span {
-          font-size: 0.32rem;
-          margin-left: 0.4rem;
+        span{
+          font-size: .32rem;
+          margin-left: .4rem;
         }
       }
     }
   }
-}
 </style>
