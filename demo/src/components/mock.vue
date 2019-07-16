@@ -34,6 +34,7 @@ export default Vue.extend({
       Tabs: "list/GetList"
     }),
     btn(id:number): any {
+     this.$router.push({path:'/about',query:{Id:id}}),
       this.Tabs({
         SerialID: id,
         phone: this.phone
