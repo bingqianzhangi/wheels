@@ -26,7 +26,7 @@ export default Vue.extend({
     //   })
 		// },
 		move(ind){
-			// this.$refs.
+			this.$emit('handleClick',ind);
 		}
 	},
 });
