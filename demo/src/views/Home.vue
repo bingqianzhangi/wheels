@@ -7,9 +7,9 @@
 
 <script lang="ts">
 import Vue from 'vue';
-import {mapActions, mapState} from 'vuex';
 import myList from '@/components/myList.vue'; // @ is an alias to /src
 import sideBar from '@/components/sideBar.vue'; // @ is an alias to /src
+import {mapActions, mapState} from 'vuex';
 
 export default Vue.extend({
   name: 'home',

@@ -1,53 +1,37 @@
 <template>
-	<div class="side">
-		<ul>
-			<li>#</li>
-		</ul>
-		<ul v-for="(item,index) in title" :key="index" @click="move(index)">
-			<li>{{item}}</li>
-		</ul>
-  </div>
+  <ul>
+    <li v-for="(item) in title" :key="item">{{item}}</li>
+  </ul>
 </template>
 
-<script>
-import Vue from 'vue';
-import BSCroll from 'better-scroll';
-import { mapActions } from 'vuex';
+<script lang="ts">
+  import Vue from 'vue'
+  export default Vue.extend({
+    props: {
+      title: {
+        type: Array,
+        value: []
+      }
+    }
+  })
+</script>
 
-export default Vue.extend({
-  name: 'myList',
-	props: {
-		title: Array
-	},
-	methods: {
-		// bscroll(){
-		// 	this.leftSCroll=new BSCroll('.side',{
-    //     click:true
-    //   })
-		// },
-		move(ind){
-			// this.$refs.
-		}
-	},
-});
-</script>	
 
-<style lang="scss">
-.side{
-	z-index: 99;
+<style lang="scss" scoped>
+  ul {
     position: fixed;
+    z-index: 101;
+    top: 0;
     right: 0;
-    top: 50%;
-    -webkit-transform: translateY(-50%);
-    transform: translateY(-50%);
-    padding-left: .2rem;
-		ul{
-			li{
-				font-size: .24rem;
-    		color: #666;
-    		font-weight: 500;
-    		padding: .02rem .1rem;
-			}
-		}
-}
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  li {
+    color: #666;
+    font-weight: 500;
+    padding: .02rem .1rem;
+  }
 </style>
