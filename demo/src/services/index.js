@@ -14,6 +14,14 @@ export function carList() {
         method: 'GET'
     })
 }
+// GetLists
+export function GetLists(params) {
+    return request({
+        url: `v2-car-getInfoAndListById.html?SerialID=${params.SerialID}&${params.phone}`,
+        method: 'GET',
+        params
+    })
+}
 // export let GetList = params => {
 //     return request.get('v2-car-getMakeListByMasterBrandId.html?MasterID=97&_1563176334484');
 // }

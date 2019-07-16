@@ -1,4 +1,4 @@
-import { GetList } from "../../services/index";
+import { GetLists } from "../../services/index";
 const state = {
   list: []
 }
@@ -8,9 +8,9 @@ const getters = {
 }
 //异步改变
 const actions = {
-  async Get({ commit }, payload) {
+  async GetList({ commit }, payload) {
       console.log('sa',payload)
-    let data = await GetList(params);
+    let data = await GetLists(payload);
     commit('SetTabList', data)
   }
 }

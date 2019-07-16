@@ -2,8 +2,8 @@
   <div class="right">
     <p>{{List.GroupName}}</p>
     <ul v-for="(item,index) in List.GroupList" :key="index">
-      <li>
-        <img :src="item.CoverPhoto" alt />
+      <li @click="btn(item.SerialID)">
+        <img :src="item.Picture" alt />
         <div>
           <p>{{item.AliasName}}</p>
           <p>{{item.DealerPrice}}</p>
@@ -15,12 +15,31 @@
 
 <script lang="ts">
 import Vue from "vue";
+import { mapState, mapActions, mapMutations } from "vuex";
 export default Vue.extend({
   props: ["List"],
   data() {
-    return {};
+    let phone :string='_1563235046613'
+    return {
+      phone
+    };
   },
-  methods: {}
+  computed: {
+    ...mapState({
+      Lists: state => state.list.list
+    })
+  },
+  methods: {
+    ...mapActions({
+      Tabs: "list/GetList"
+    }),
+    btn(id): any {
+      this.Tabs({
+        SerialID: id,
+        phone: this.phone
+      });
+    }
+  }
 });
 </script>
 
@@ -36,6 +55,8 @@ export default Vue.extend({
   z-index: 100;
   height: 100%;
   box-shadow: 0 0 0.5rem #eee;
+  overflow: hidden;
+  overflow-y: scroll;
   > p {
     margin-left: 1px;
     font-size: 0.28rem;
@@ -57,13 +78,13 @@ export default Vue.extend({
         width: 1.8rem;
         height: 1.2rem;
       }
-      div{
+      div {
         display: block;
       }
       p {
         display: block;
-        margin-block-start: .5em;
-        margin-block-end: .5em;
+        margin-block-start: 0.5em;
+        margin-block-end: 0.5em;
         margin-inline-start: 0px;
         margin-inline-end: 0px;
       }
