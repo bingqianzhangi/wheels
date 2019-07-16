@@ -1,44 +1,51 @@
 <template>
     <div class="list">
-        <ul v-for="(item, index) in list" :key="index">
-            <p>{{index}}</p>
-            <li v-for="(value) in item" :key="value.MasterID">
-                <img :src="value.CoverPhoto" :alt="value.Name">
-                <span>{{value.Name}}</span>
-            </li>
-        </ul>
+        <div v-for="(item,index) in list" :key="index">
+            <p>{{item.code}}</p>
+            <ul v-for="(v,i) in item.Spelling" :key="v.MasterID">
+                <li>
+                  <img :src="v.CoverPhoto" alt="">
+                  <span>{{v.Name}}</span>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
 <script lang="ts">
-import Vue from 'vue'
+import Vue from 'vue';
+
 export default Vue.extend({
-    props: {
-        list: {
-            type: Object,
-            value: {}
-        }
-    }
-})
+  name: 'myList',
+  props: {
+    list: Array
+  }
+});
 </script>
 
-
-<style lang="scss" scoped>
-  .list{
+<style lang="scss">
+.list{
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  >div{
     width: 100%;
-    overflow: hidden;
+    p{
+      width: 100%;
+      font-size: .28rem;
+      line-height: .4rem;
+      background: #f4f4f4;
+      padding-left: .3rem;
+      color: #aaa;
+    }
     ul{
-      p{
-        font-size: .28rem;
-        line-height: .4rem;
-        background: #f4f4f4;
-        padding-left: .3rem;
-        color: #aaa;
-      }
+      margin: 0 .3rem;
       li{
         height: 1rem;
         box-sizing: border-box;
         border-bottom: 1px solid #ddd;
+        display: flex;
+        align-items: center;
         img{
           height: .8rem;
         }
@@ -49,4 +56,5 @@ export default Vue.extend({
       }
     }
   }
+}
 </style>
