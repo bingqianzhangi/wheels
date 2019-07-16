@@ -1,0 +1,22 @@
+$page-background-color: #f4f4f4;
+$border-color: #ddd;
+$spell-color: #aaa;
+$price-color: red;
+$button-background-color: #3aacff;
+
+$brand-height: .5rem;
+$type-height: .7rem;
+
+@mixin border_bottom($dir:left, $color: #eee) {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    &:after{
+        content: '';
+        display: inline-block;
+        width: 100%;
+        height: 1px;
+        transform: scale(0.5);
+        background: $border-color;
+    }
+}
