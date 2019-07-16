@@ -1,22 +1,39 @@
 <template>
     <div class="list">
+<<<<<<< HEAD
       <div ref="listScroll">
         <div v-for="(item, index) in list" :key="index">
             <p>{{index}}</p>
             <ul>
               <li v-for="(value) in item" :key="value.MasterID" class="border-bottom">
+=======
+        <div v-for="(item, index) in list" :key="index">
+            <p>{{index}}</p>
+            <ul>
+              <li v-for="(value) in item" :key="value.MasterID" class="border-bottom" @click="btn(value.MasterID)" >
+>>>>>>> yanglibo
                 <img :src="value.CoverPhoto" :alt="value.Name">
                 <span>{{value.Name}}</span>
               </li>
             </ul>
         </div>
+<<<<<<< HEAD
       </div>
+=======
+        <Mock class='mock' v-show="isTrue" :List="Lists" />
+>>>>>>> yanglibo
     </div>
 </template>
 
 <script lang="ts">
+<<<<<<< HEAD
 import Vue from 'vue'
 import BSCroll from 'better-scroll'
+=======
+import Vue from "vue";
+import Mock from "./mock.vue";
+import { mapState, mapActions, mapMutations } from "vuex";
+>>>>>>> yanglibo
 export default Vue.extend({
     data(){
       return{
@@ -29,9 +46,11 @@ export default Vue.extend({
     props: {
         list: {
             type: Object,
-            value: {}
+            value: {},
+            list: Array
         }
     },
+<<<<<<< HEAD
     created() {
       this.$nextTick(()=>{
         this.bscroll();
@@ -78,6 +97,40 @@ export default Vue.extend({
         }
         return 0;
       }
+=======
+    components: {
+    Mock
+    },
+    data() {
+    let isTrue: boolean = false;
+    // let Lists: number[] = [];
+    let MasterID: number = 97;
+    let phone: string = "_1563176334484";
+    return {
+      isTrue,
+      // Lists,
+      MasterID,
+      phone
+    };
+  },
+  computed: {
+    ...mapState({
+      Lists: state => state.index.list
+    })
+  },
+  methods: {
+    ...mapActions({
+      Tabs: "index/Get"
+    }),
+    btn(id:number): any {
+      this.isTrue =true;
+      console.log(this.isTrue);
+      this.Tabs({
+        MasterID: id,
+        phone: this.phone
+      });
+    }
+>>>>>>> yanglibo
   }
 })
 </script>
@@ -118,4 +171,10 @@ export default Vue.extend({
     }
   }
 }
+<<<<<<< HEAD
+=======
+.mock{
+  z-index:9999
+}
+>>>>>>> yanglibo
 </style>
