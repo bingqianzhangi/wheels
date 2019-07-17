@@ -1,7 +1,7 @@
 <template>
   <div class="home">
-    <myList :list="brandList"/> 
-    <sideBar :title="letterList"/> 
+    <myList :list="brandList" :current="current" /> 
+    <sideBar :title="letterList" :current.sync="current" /> 
   </div>
 </template>
 
@@ -13,6 +13,11 @@ import {mapActions, mapState} from 'vuex';
 
 export default Vue.extend({
   name: 'home',
+  data() {
+    return {
+      current: ''
+    }
+  },
   components: {
     myList,
     sideBar

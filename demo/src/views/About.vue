@@ -37,7 +37,7 @@
       </div>
     </div>
     <div class="bottom">
-      <p>询问底价</p>
+      <p @click="askPrice">询问底价</p>
       <p>本地经销商为你报价</p>
     </div>
   </div>
@@ -61,7 +61,10 @@ export default Vue.extend({
   methods: {
     ...mapActions({
       Tabs: "list/GetList"
-    })
+    }),
+    askPrice(){
+      this.$router.push({path:'/ask'})
+    }
   },
   created() {
     let id = this.$route.query.Id;

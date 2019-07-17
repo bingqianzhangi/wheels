@@ -7,7 +7,6 @@
       <li v-for="(item,index) in title" 
       :key="item" 
       :class="current==item?'active':''"
-      @click="scrollLocation(item,index)"
       >{{item}}</li>
     </ul>
     <span class="letter" v-if="isTouch">{{current}}</span>
@@ -21,17 +20,22 @@
       title: {
         type: Array,
         value: []
+      },
+      current: {
+        type: String,
+        value: ''
       }
     },
     data() {
+      let isTouch: boolean = false;
       return {
-        current:'',
-        isTouch:false
+        isTouch
       }
     },
     methods: {
       touchStart(e: Event):void{
         this.isTouch = true;
+        this.touchMove(e);
       },
       touchMove(e: Event): void{
         let pageY = e.touches[0].pageY;
@@ -46,18 +50,12 @@
         if(letterIndex>this.title.length-1){
           letterIndex = this.title.length-1;
         }
-        this.current = this.title[letterIndex];
-        // console.log('letter...',this.title[letterIndex])
-        this.$bus.$emit('bscroll',this.title[letterIndex]);
+        this.$emit('update:current',this.title[letterIndex]);
       },
       touchEnd(e: Event): void{
         this.isTouch = false;
-        this.current = '';
-      },
-      scrollLocation(item,ind){
-        this.current = item;
-        this.$bus.$emit('scrollL',item,ind);
-      },
+        this.$emit('update:current','');
+      }
     }
   })
 </script>

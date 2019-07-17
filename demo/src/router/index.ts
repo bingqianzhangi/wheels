@@ -4,11 +4,12 @@ import Router from 'vue-router'
 // 引入路由组件
 import Home from '@/views/Home.vue'
 import About from '@/views/About.vue'
+import Ask from '@/views/Ask.vue'
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes: [
     {
@@ -20,10 +21,15 @@ export default new Router({
       path: '/about',
       name: 'about',
       component:About
-    //   // route level code-splitting
-    //   // this generates a separate chunk (about.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
+      //   // route level code-splitting
+      //   // this generates a separate chunk (about.[hash].js) for this route
+      //   // which is lazy-loaded when the route is visited.
+      //   component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
+    },
+    {
+      path: '/ask',
+      name: 'ask',
+      component:Ask
     }
   ]
 })

@@ -1,27 +1,24 @@
 <template>
-  <div class="list">
-    <div ref="listScroll">
-      <div v-for="(item, index) in list" :key="index">
-        <p>{{index}}</p>
-        <ul>
-          <li
-            v-for="(value) in item"
-            :key="value.MasterID"
-            class="border-bottom"
-            @click="btn(value.MasterID)"
-          >
-            <img :src="value.CoverPhoto" :alt="value.Name" />
-            <span>{{value.Name}}</span>
-          </li>
-        </ul>
-      </div>
+  <div class="list" ref="scrollEle">
+    <div v-for="(item, index) in list" :key="index">
+      <p :ref="index">{{index}}</p>
+      <ul>
+        <li
+          v-for="(value) in item"
+          :key="value.MasterID"
+          class="border-bottom"
+          @click="btn(value.MasterID)"
+        >
+          <img :src="value.CoverPhoto" :alt="value.Name" />
+          <span>{{value.Name}}</span>
+        </li>
+      </ul>
     </div>
     <Mock class="mock" v-show="isTrue" :List="Lists" />
   </div>
 </template>
 
 <script lang="ts">
-import BSCroll from "better-scroll";
 import Vue from "vue";
 import Mock from "./mock.vue";
 import { mapState, mapActions, mapMutations } from "vuex";
@@ -31,16 +28,10 @@ export default Vue.extend({
   },
   data() {
     let isTrue: boolean = false;
-    // let Lists: number[] = [];
     let MasterID: number = 97;
     let phone: string = "_1563176334484";
     return {
-      cont: 0,
-      scrollY: 0,
-      scrollList: [],
-      scrollHeightArr: [],
       isTrue,
-      // Lists,
       MasterID,
       phone
     };
@@ -50,21 +41,18 @@ export default Vue.extend({
       type: Object,
       value: {},
       list: Array
+    },
+    current: {
+      type: String,
+      value: ''
     }
   },
-  created() {
-    this.$nextTick(() => {
-      this.bscroll();
-      this.scrollHeight();
-    });
-    this.$bus.$on("scrollL", (item, ind) => {
-      let scrollDiv = this.$refs.listScroll.children;
-      this.rightSCroll.scrollToElement(scrollDiv[ind], 100);
-    });
-    // this.$bus.$on('bscroll',(tit)=>{
-    //   let scrollDiv=this.$refs.listScroll.children;
-    //   this.rightSCroll.scrollToElement(scrollDiv[ind],100);
-    // })
+  watch: {
+    current(val){
+      if(val){
+        this.$refs.scrollEle.scrollTop = this.$refs[val][0].offsetTop;
+      }
+    }
   },
   methods: {
     ...mapActions({
@@ -77,41 +65,12 @@ export default Vue.extend({
         MasterID: id,
         phone: this.phone
       });
-    },
-    bscroll() {
-      this.rightSCroll = new BSCroll(".list", {
-        probeType: 3
-      });
-      this.rightSCroll.on("scroll", res => {
-        this.cont = this.currentIndex;
-        this.scrollY = Math.abs(res.y);
-      });
-    },
-    scrollHeight() {
-      let scrollDiv = this.$refs.listScroll.children;
-      let height = 0;
-      this.scrollHeightArr.push(height);
-      for (let i = 0; i < scrollDiv.length; i++) {
-        let item = scrollDiv[i];
-        height += item.clientHeight;
-        this.scrollHeightArr.push(height);
-      }
     }
   },
   computed: {
     ...mapState({
       Lists: state => state.index.list
-    }),
-    currentIndex() {
-      for (let j = 0; j < this.scrollHeightArr.length; j++) {
-        let height1 = this.scrollHeightArr[j];
-        let height2 = this.scrollHeightArr[j + 1];
-        if (!height2 || (this.scrollY >= height1 && this.scrollY < height2)) {
-          return j;
-        }
-      }
-      return 0;
-    }
+    })
   }
 });
 </script>
