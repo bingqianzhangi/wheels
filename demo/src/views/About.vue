@@ -1,7 +1,7 @@
 <template>
   <div class="car">
     <div class="content">
-      <div class="img">
+      <div class="img" @click='btn(Lists.SerialID)' >
         <img :src="Lists.CoverPhoto" alt />
         <span>{{Lists.pic_group_count}}张照片</span>
       </div>
@@ -64,6 +64,9 @@ export default Vue.extend({
     }),
     askPrice(){
       this.$router.push({path:'/ask'})
+    },
+    btn(id:any){
+      this.$router.push({ path: "/img", query: { SerialID: id } })
     }
   },
   created() {

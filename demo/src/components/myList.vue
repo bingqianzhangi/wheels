@@ -111,7 +111,7 @@ export default Vue.extend({
     }
   }
 }
-.mock{
-  z-index:9999
-}
+// .mock{
+//   z-index:9999
+// }
 </style>

@@ -6,13 +6,15 @@ import createLogger from 'vuex/dist/logger';
 import home from './modules/home';
 import index from './modules/index';
 import list from './modules/list';
+import img  from './modules/img'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
     home,
     index,
-    list
+    list,
+    img
   },
   state: {
 
