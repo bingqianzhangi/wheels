@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <div>
     <ul
       @touchstart="touchStart"
@@ -13,14 +12,6 @@
     </ul>
     <span class="letter" v-if="isTouch">{{current}}</span>
   </div>
-=======
-  <ul
-    @touchstart="touchStart"
-    @touchmove="touchMove"
-    @touchend="touchEnd">
-    <li v-for="(item) in title" :key="item">{{item}}</li>
-  </ul>
->>>>>>> yanglibo
 </template>
 
 <script lang="ts">
@@ -43,7 +34,6 @@
         this.isTouch = true;
       },
       touchMove(e: Event): void{
-<<<<<<< HEAD
         let pageY = e.touches[0].pageY;
         let letterHeight = 0.4*window.innerWidth/750*100;
         let letterOffsetTop = (window.innerHeight-letterHeight*this.title.length)/2;
@@ -69,14 +59,6 @@
         this.$bus.$emit('scrollL',item,ind);
       },
     }
-=======
-        console.log(e)
-      },
-      touchEnd(e: Event): void{
-        this.isTouch = false;
-      }
-    },
->>>>>>> yanglibo
   })
 </script>
 
@@ -98,7 +80,6 @@
     color: #666;
     font-weight: 500;
     font-size: .24rem;
-<<<<<<< HEAD
     padding: 0 .1rem;
     width: .4rem;
     height: .4rem;
@@ -121,8 +102,5 @@
     text-align: center;
     line-height: 1.5rem;
     transform: translate3d(-50%,-50%,0);
-=======
-    padding: .08rem .1rem;
->>>>>>> yanglibo
   }
 </style>
