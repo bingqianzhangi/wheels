@@ -80,7 +80,8 @@ export default Vue.extend({
     },
     bscroll() {
       this.rightSCroll = new BSCroll(".list", {
-        probeType: 3
+        probeType: 3,
+        click:true
       });
       this.rightSCroll.on("scroll", res => {
         this.cont = this.currentIndex;
@@ -152,7 +153,7 @@ export default Vue.extend({
     }
   }
 }
-.mock{
-  z-index:9999
-}
+// .mock{
+//   z-index:9999
+// }
 </style>

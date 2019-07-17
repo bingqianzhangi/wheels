@@ -4,7 +4,7 @@ import Router from 'vue-router'
 // 引入路由组件
 import Home from '@/views/Home.vue'
 import About from '@/views/About.vue'
-
+import Img from '@/views/Img.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -24,6 +24,11 @@ export default new Router({
     //   // this generates a separate chunk (about.[hash].js) for this route
     //   // which is lazy-loaded when the route is visited.
     //   component: () => import(/* webpackChunkName: "about" */ '@/views/About.vue')
-    }
+    },
+    {
+      path: '/img',
+      name: 'img',
+      component: Img
+    },
   ]
 })

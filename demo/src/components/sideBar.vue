@@ -7,7 +7,7 @@
       <li v-for="(item,index) in title" 
       :key="item" 
       :class="current==item?'active':''"
-      @click="scrollLocation(item,index)"
+      @touchstart="scrollLocation(item,index)"
       >{{item}}</li>
     </ul>
     <span class="letter" v-if="isTouch">{{current}}</span>

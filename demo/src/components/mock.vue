@@ -1,62 +1,87 @@
 <template>
-  <div class="right">
-    <p>{{List.GroupName}}</p>
-    <ul v-for="(item,index) in List.GroupList" :key="index">
-      <li @click="btn(item.SerialID)">
-        <img :src="item.Picture" alt />
-        <div>
-          <p>{{item.AliasName}}</p>
-          <p>{{item.DealerPrice}}</p>
-        </div>
-      </li>
-    </ul>
+  <div>
+    <div class="sc">
+      <div class="right">
+        <p>{{List.GroupName}}</p>
+        <ul v-for="(item,index) in List.GroupList" :key="index">
+          <li @click="btn(item.SerialID)">
+            <img :src="item.Picture" alt />
+            <div>
+              <p>{{item.AliasName}}</p>
+              <p>{{item.DealerPrice}}</p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
+import BScroll from "better-scroll";
 import { mapState, mapActions, mapMutations } from "vuex";
 export default Vue.extend({
   props: ["List"],
   data() {
-    let phone :string='_1563235046613'
+    let phone: string = "_1563235046613";
     return {
       phone
     };
   },
   computed: {
     ...mapState({
-      Lists: (state:any) => state.list.list
+      Lists: (state: any) => state.list.list
     })
   },
   methods: {
     ...mapActions({
       Tabs: "list/GetList"
     }),
-    btn(id:number): any {
-     this.$router.push({path:'/about',query:{Id:id}}),
-      this.Tabs({
-        SerialID: id,
-        phone: this.phone
+    btn(id: number): any {
+      this.$router.push({ path: "/about", query: { Id: id } }),
+        this.Tabs({
+          SerialID: id,
+          phone: this.phone
+        });
+    },
+    bscroll() {
+      new BScroll(".sc",{
+          click:true
       });
     }
+  },
+  created() {
+    this.$nextTick(() => {
+      this.bscroll();
+    });
   }
 });
 </script> 
 
 <style lang="scss" scoped>
-.right {
+.sc {
   width: 75%;
   position: fixed;
   top: 0;
   right: 0;
   transition: all 0.2s ease;
   background: #fff;
-  z-index: 100;
+  z-index: 2000;
   height: 100%;
   box-shadow: 0 0 0.5rem #eee;
-  overflow: hidden;
   overflow-y: scroll;
+}
+.right {
+  width: 70%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  transition: all 0.2s ease;
+  background: #fff;
+  z-index: 2000;
+  height: 100%;
+  box-shadow: 0 0 0.5rem #eee;
   > p {
     margin-left: 1px;
     font-size: 0.28rem;
