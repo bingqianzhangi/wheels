@@ -1,4 +1,4 @@
-import { location, carDetail, allCity, allCityDetail } from '@/services'
+import { location, carDetail, allCity, allCityDetail, askPrice } from '@/services'
 
 const state = {
   preciseLocation:{} = {},
@@ -23,6 +23,10 @@ const actions = {
   async getCityDetail({commit}: {commit: Function}, payload: any): Promise<void>{
     let data:any = await allCityDetail(payload);
     commit('updateCityDetail', data.data);
+  },
+  async sendAsk({commit}: {commit: Function}, payload: any): Promise<void>{
+    let data:any = await askPrice(payload);
+    // commit('updateCityDetail', data.data);
   }
 }
 

@@ -12,7 +12,7 @@
         </p>
         <p>指导价 {{Lists.market_attribute.official_refer_price}}</p>
         <div class="action">
-          <button>询问低价</button>
+          <button @click="askPicPrice(Lists.market_attribute.buy_car_detail_url)">询问底价</button>
         </div>
       </div>
       <div class="car_list">
@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    <div class="bottom">
+    <div class="bottom" @click="askPicPrice(Lists.market_attribute.buy_car_detail_url)">
       <p>询问底价</p>
       <p>本地经销商为你报价</p>
     </div>
@@ -64,7 +64,7 @@ export default Vue.extend({
       getLocation: "carDetail/getLocation",
       getCarDetail: "carDetail/getCarDetail"
     }),
-    askPrice(id){
+    askPrice(id:any){
       this.getLocation();
       this.$router.push({path:'/ask'});
       this.getCarDetail({
@@ -74,6 +74,15 @@ export default Vue.extend({
     },
     btn(id:any){
       this.$router.push({ path: "/img", query: { SerialID: id } })
+    },
+    askPicPrice(url){
+      let id=url.split('?')[1].split('&')[1].split('=')[1];
+      this.getLocation();
+      this.$router.push({path:'/ask'});
+      this.getCarDetail({
+        carId: id,
+        cityId: 201
+      })
     }
   },
   created() {

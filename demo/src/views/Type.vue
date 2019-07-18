@@ -1,6 +1,17 @@
 <template>
   <div class="wrap">
-    类型
+    <div class="c-type">
+      <span>2019</span>
+    </div>
+    <div class="l-type">
+      <p class="tip">1.5L/135kW 涡轮增压</p>
+      <ul>
+        <li>
+          <p><span>2019款 改款 C 260 L 运动轿车</span><span>26.88万起</span></p>
+          <p><span>184马力9档手自一体</span><span>指导价 34.68万</span></p>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -27,4 +38,74 @@ export default Vue.extend({
 
 <style lang="scss" scoped>
 @import '../scss/global.scss';
+  .wrap{
+    position: absolute;
+    top: 0;
+    z-index: 101;
+    background: #f4f4f4;
+    height: 100%;
+    width: 100%;
+    -webkit-animation: c .2s ease forwards;
+    animation: c .2s ease forwards;
+  }
+  .c-type{
+    margin-top: .15rem;
+    padding-left: .2rem;
+    font-size: .3rem;
+    line-height: .76rem;
+    height: .76rem;
+    background: #fff;
+    overflow-x: scroll;
+    span {
+      padding-right: .42rem;
+    }
+    .active {
+      color: #00afff;
+    }
+  }
+  .l-type{
+    background: #fff;
+    li{
+      margin: 0 .2rem;
+      padding: .28rem .06rem;
+      border-bottom: 1px solid #eee;
+      box-sizing: border-box;
+      height: 1.25rem;
+      line-height: 1;
+      p:first-child {
+        font-size: .3rem;
+        span:nth-child(1) {
+          width: 5rem;
+          display: inline-block;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+        span:nth-child(2) {
+          float: right;
+          color: red;
+          font-size: .26rem;
+        }
+      }
+      p:nth-child(2) {
+        padding-top: .16rem;
+        font-size: .24rem;
+        span:first-child {
+          color: #b3b3b3;
+        }
+        span:nth-child(2) {
+          color: #818181;
+          float: right;
+        }
+      }
+    }
+  }
+  .tip{
+    height: .5rem;
+    line-height: .5rem;
+    padding: 0 .2rem;
+    font-size: .24rem;
+    color: #666;
+    background: #eee;
+  }
 </style>

@@ -1,65 +1,83 @@
 <template>
   <div class="wrap">
-    <header>
-      <p>可向多个商家咨询最低价，商家及时回复</p>
-      <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="">
-    </header>
-    <div class="content">
-      <dl @click="selectType(carDetailList.details.car_id)">
-        <dt><img :src="carDetailList.details.serial.Picture" alt=""></dt>
-        <dd>
-          <p>{{carDetailList.details.serial.AliasName}}</p>
-          <p><span>{{carDetailList.details.market_attribute.year}}款 </span><span>{{carDetailList.details.car_name}}</span></p>
-        </dd>
-      </dl>
-      <div class="self-info">
-        <p class="tip">个人信息</p>
-        <ul>
-          <li>
-            <span>姓名</span>
-            <input type="text" placeholder="输入你的真实中文姓名" maxlength="4" value="咻咻咻">
-          </li>
-          <li>
-            <span>手机</span>
-            <input type="tel" placeholder="输入你的真实手机号码" maxlength="11" value="13245345463">
-          </li>
-          <li @click="select">
-            <span>城市</span>
-            <span>{{city}}</span>
-          </li>
-        </ul>
-        <div class="askPrice">
-          <button>询最低价</button>
+    <div>
+      <header>
+        <p>可向多个商家咨询最低价，商家及时回复</p>
+        <img src="http://h5.chelun.com/2017/official/img/icon-help.png" alt="">
+      </header>
+      <div class="content">
+        <dl @click="selectType(carDetailList.details.car_id)">
+          <dt><img :src="carDetailList.details.serial.Picture" alt=""></dt>
+          <dd>
+            <p>{{carDetailList.details.serial.AliasName}}</p>
+            <p><span>{{carDetailList.details.market_attribute.year}}款 </span><span>{{carDetailList.details.car_name}}</span></p>
+          </dd>
+        </dl>
+        <div class="self-info">
+          <p class="tip">个人信息</p>
+          <ul>
+            <li>
+              <span>姓名</span>
+              <input type="text" placeholder="输入你的真实中文姓名" maxlength="4" v-model="name">
+            </li>
+            <li>
+              <span>手机</span>
+              <input type="tel" placeholder="输入你的真实手机号码" maxlength="11" v-model="tel">
+            </li>
+            <li @click="select">
+              <span>城市</span>
+              <span>{{city}}</span>
+            </li>
+          </ul>
+          <div class="askPrice" @click="lookPrice">
+            <button>询最低价</button>
+          </div>
+        </div>
+        <div class="dealer-info">
+          <p class="tip">选择报价经销商</p>
+          <ul>
+            <li class="" v-for="item in carDetailList.list" :key="item.dealerId" @click="dealerids(item.dealerId)">
+              <p><span>{{item.dealerShortName}}</span><span>{{parseInt(item.promotePrice)}}万</span></p>
+              <p><span>{{item.address}}</span><span>{{item.saleRange}}</span></p>
+            </li>
+          </ul>
         </div>
       </div>
-      <div class="dealer-info">
-        <p class="tip">选择报价经销商</p>
-        <ul>
-          <li class="" v-for="item in carDetailList.list" :key="item.dealerId">
-            <p><span>{{item.dealerShortName}}</span><span>{{parseInt(item.promotePrice)}}万</span></p>
-            <p><span>{{item.address}}</span><span>{{item.saleRange}}</span></p>
-          </li>
-        </ul>
+      <div :class="['select-city',{'active':show}]">
+        <div class="province">
+          <div class="location">
+            <p class="same">自动定位</p>
+            <p>北京</p>
+          </div>
+          <div class="list">
+            <p class="same">省市</p>
+            <cityList />
+          </div>
+        </div> 
+        <div :class="['city',{'current':hide}]" @click="disappear">
+          <ul>
+            <li v-for="item in cityDetail" :key="item.CityID" @click="back(item.CityID,item.CityName)">{{item.CityName}}</li>
+          </ul>
+        </div>   
+      </div>
+      <div class="result">
+        <div class="cont">
+          <img src="http://h5.chelun.com/2017/official/img/q-icon.png" alt="">
+          <p>询价成功</p>
+          <p>稍后有专业汽车顾问为你服务<br>请保持手机畅通</p>
+          <div @click="sure">
+            <button>确定</button>
+          </div>
+        </div>
       </div>
     </div>
-    <div :class="['select-city',{'active':show}]">
-      <div class="province">
-        <div class="location">
-          <p class="same">自动定位</p>
-          <p>北京</p>
-        </div>
-        <div class="list">
-          <p class="same">省市</p>
-          <cityList />
-        </div>
-      </div> 
-      <div :class="['city',{'current':hide}]" @click="disappear">
-        <ul>
-          <li v-for="item in cityDetail" :key="item.CityID" @click="back(item.CityID,item.CityName)">{{item.CityName}}</li>
-        </ul>
-      </div>   
+    <div :class="['alert show',{'accord':flag}]">
+      <div class="alert-content">
+        <span class="alert-title-sub"></span>
+        <span class="alert-title">{{prompt}}</span>
+        <span class="alert-ok" @click="ok">好</span>
+      </div>
     </div>
-  </div>
   </div>
 </template>
 
@@ -73,11 +91,23 @@ export default Vue.extend({
   data() {
     let show: Object = false;
     let hide: Object = false;
+    let flag: Object = false;
+    let result: Object = false;
     let city: String = '北京';
+    let name: String = '咻咻咻';
+    let tel: Number = 13245345463;
+    let prompt: String = '请输入真实的中文姓名';
+    let dealeridList: Array = [];
     return {
       show,
       hide,
-      city
+      city,
+      name,
+      tel,
+      flag,
+      prompt,
+      dealeridList,
+      result
     }
   },
   components: {
@@ -86,13 +116,15 @@ export default Vue.extend({
   computed: {
     ...mapState({
       carDetailList: (state:Object)=>state.carDetail.carDetailList,
-      cityDetail: (state:Array<Object>)=>state.carDetail.cityDetail
+      cityDetail: (state:Array<Object>)=>state.carDetail.cityDetail,
+      preciseLocation: (state:Object)=>state.carDetail.preciseLocation
     })
   },
   methods: {
     ...mapActions({
       getAllCity: "carDetail/getAllCity",
       getCarDetail: "carDetail/getCarDetail",
+      sendAsk: "carDetail/sendAsk"
     }),
     select(){
       this.show = true;
@@ -111,6 +143,51 @@ export default Vue.extend({
     },
     selectType(id: String){
       this.$router.push({ path: "/type", query: { curId: id } })
+    },
+    lookPrice(){
+      if(!this.name){
+        this.prompt = '请输入真实的中文姓名';
+        this.flag = true;
+        return;
+      }
+      var pattern = /^1[34578]\d{9}$/;
+      if (!pattern.test(this.tel)) {
+        this.prompt = '请输入正确的手机号';
+        this.flag = true;
+        return false;
+      }
+      if(!this.dealeridList.length){
+        this.prompt = '请先选择报价经销商';
+        this.flag = true;
+        return;
+      }
+      this.sendAsk({
+        carid:this.carDetailList.details.car_id,
+        mobile:this.tel,
+        dealerids:this.dealeridList.join()||'',
+        location:this.city,
+        carname:this.carDetailList.details.market_attribute.year+'款'+this.carDetailList.details.car_name,
+        locationid:this.preciseLocation.CityID,
+        name:this.name,
+        channelid:0,
+        ordertypeid:1,
+        flag:1,
+        openUDID:'551b954d-415a-721f-8d89-ac6852ece497',
+        os:'ios',
+        cl_from:null,
+        _: 1563463003573
+      })
+      this.result = true;
+    },
+    ok(){
+      this.flag = false;
+    },
+    dealerids(id){
+      this.dealeridList.push(id);
+      console.log(this.dealeridList.join())
+    },
+    sure(){
+      this.result = false;
     }
   },
   created(){
@@ -392,5 +469,137 @@ export default Vue.extend({
     font-size: .24rem;
     padding-left: .2rem;
     background: #f4f4f4;
+  }
+  .alert {
+    display: none;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1000;
+    background-color: rgba(0,0,0,.4);
+    -webkit-animation: a .3s ease forwards;
+    animation: a .3s ease forwards;
+    .alert-content {
+      position: fixed;
+      z-index: 9999;
+      background: #f6f6f6;
+      border-radius: 7px;
+      width: 72%;
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate(-50%,-50%);
+      transform: translate(-50%,-50%);
+      -webkit-transform-origin: 50% 50%;
+      transform-origin: 50% 50%;
+      text-align: center;
+      font-size: 0;
+      .alert-title-sub {
+        display: block;
+        width: 80%;
+        margin: 0 auto;
+        padding: 18px 0 6px;
+        line-height: 22px;
+        font-size: 16px;
+        font-weight: 700;
+      }
+      .alert-title {
+        display: block;
+        margin: 0 auto;
+        padding: 0 0 20px;
+        max-width: 86%;
+        line-height: 16px;
+        font-size: 13px;
+      }
+      .alert-ok {
+        position: relative;
+        display: block;
+        width: 100%;
+        padding: 14px 0;
+        border-radius: 0 0 7px 7px;
+        line-height: 16px;
+        font-size: 16px;
+        color: #007aff;
+        transition: background-color .1s;
+        &:before {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          border-bottom: 1px solid #c8c7cc;
+          -webkit-transform: scaleY(.5);
+          transform: scaleY(.5);
+          -webkit-transform-origin: 0 0;
+          transform-origin: 0 0;
+        }
+      }
+    }
+  }
+  .result{
+    top: 0;
+    position: fixed;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    background: rgba(0,0,0,.5);
+    display: -webkit-box;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    .cont{
+      -webkit-animation: e .3s ease forwards;
+      animation: e .3s ease forwards;
+      height: auto;
+      background: #fff;
+      border-radius: .2rem;
+      padding: .3rem .3rem 0;
+      text-align: center;
+      display: inline-block;
+      width: 76%;
+      overflow: hidden;
+      img:first-child{
+        width: .8rem;
+        display: block;
+        margin: 0 auto .3rem;
+      }
+      p:nth-child(2){
+        font-size: .4rem;
+        color: #3cc144;
+        margin: .1rem;
+      }
+      p:nth-child(3){
+        font-size: .24rem;
+        color: silver;
+        margin: .15rem;
+      }
+      div{
+        width: 120%;
+        margin-left: -10%;
+        height: .8rem;
+        margin-top: .3rem;
+        border-top: 1px solid #f4f4f4;
+        button{
+          box-sizing: border-box;
+          color: #3aacff;
+          border: none;
+          width: 50%;
+          background: transparent;
+          font-size: .3rem;
+          line-height: .8rem;
+          padding: 0;
+        }
+      }
+    }
+  }
+  .accord{
+    display: block;
   }
 </style>

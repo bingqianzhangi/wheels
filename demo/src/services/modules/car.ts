@@ -35,3 +35,12 @@ export function allCityDetail(params:any) : Promise<Object> {
         params
     })
 }
+
+//询问价格
+export function askPrice(params:any) : Promise<Object> {
+    return request({
+        url: `/h2-submit-lowprice.html?`,
+        method: 'GET',
+        params
+    })
+}
