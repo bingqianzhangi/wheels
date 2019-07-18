@@ -30,14 +30,14 @@
                 <span>指导价 {{item.market_attribute.dealer_price_max}}</span>
                 <span>{{item.market_attribute.dealer_price_min}}</span>
               </p>
-              <button>询问低价</button>
+              <button @click="askPrice(item.car_id)">询问低价</button>
             </li>
           </ul>
         </div>
       </div>
     </div>
     <div class="bottom">
-      <p @click="askPrice">询问底价</p>
+      <p>询问底价</p>
       <p>本地经销商为你报价</p>
     </div>
   </div>
@@ -60,10 +60,17 @@ export default Vue.extend({
   },
   methods: {
     ...mapActions({
-      Tabs: "list/GetList"
+      Tabs: "list/GetList",
+      getLocation: "carDetail/getLocation",
+      getCarDetail: "carDetail/getCarDetail"
     }),
-    askPrice(){
-      this.$router.push({path:'/ask'})
+    askPrice(id){
+      this.getLocation();
+      this.$router.push({path:'/ask'});
+      this.getCarDetail({
+        carId: id,
+        cityId: 201
+      })
     },
     btn(id:any){
       this.$router.push({ path: "/img", query: { SerialID: id } })

@@ -19,7 +19,6 @@
 
 <script lang="ts">
 import Vue from "vue";
-import BScroll from "better-scroll";
 import { mapState, mapActions, mapMutations } from "vuex";
 export default Vue.extend({
   props: ["List"],
@@ -44,17 +43,7 @@ export default Vue.extend({
           SerialID: id,
           phone: this.phone
         });
-    },
-    bscroll() {
-      new BScroll(".sc",{
-          click:true
-      });
     }
-  },
-  created() {
-    this.$nextTick(() => {
-      this.bscroll();
-    });
   }
 });
 </script> 

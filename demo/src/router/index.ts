@@ -6,6 +6,7 @@ import Home from '@/views/Home.vue'
 import About from '@/views/About.vue'
 import Ask from '@/views/Ask.vue'
 import Img from '@/views/Img.vue'
+import Type from '@/views/Type.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -26,12 +27,16 @@ export default new Router({
       path: '/ask',
       name: 'ask',
       component:Ask
-    },
-    
+    },  
     {
       path: '/img',
       name: 'img',
       component: Img
     },
+    {
+      path: '/type',
+      name: 'type',
+      component: Type
+    }
   ]
 })

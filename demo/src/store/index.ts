@@ -6,7 +6,8 @@ import createLogger from 'vuex/dist/logger';
 import home from './modules/home';
 import index from './modules/index';
 import list from './modules/list';
-import img  from './modules/img'
+import img  from './modules/img';
+import carDetail  from './modules/carDetail';
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -14,7 +15,8 @@ export default new Vuex.Store({
     home,
     index,
     list,
-    img
+    img,
+    carDetail
   },
   state: {
 
