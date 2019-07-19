@@ -15,6 +15,12 @@ const actions = {
   },
   async getCarDetail({commit}: {commit: Function}, payload: any): Promise<void>{
     let data:any = await carDetail(payload);
+    data.data.list.forEach((item:any) => {
+      console.log(item)
+      item.typ=false;
+
+    });
+    console.log(data)
     commit('updateCarDetail', data.data);
   },
   async getAllCity({commit}: {commit: Function}, payload: any): Promise<void>{

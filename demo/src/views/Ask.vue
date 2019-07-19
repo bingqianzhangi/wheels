@@ -185,6 +185,7 @@ export default Vue.extend({
     },
     dealerids(id){
       this.dealeridList.push(id);
+      console.log(this.carDetailList.list)
     },
     sure(){
       this.result = false;
