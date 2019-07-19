@@ -47,6 +47,7 @@
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
 export default Vue.extend({
+  name: 'about',
   data() {
     let phone: string = "_1563235046613";
     return {

@@ -1,6 +1,6 @@
 <template>
   <div class="list" ref="scrollEle">
-    <div v-for="(item, index) in list" :key="index">
+    <div v-for="(item, index) in data" :key="index">
       <p :ref="index">{{index}}</p>
       <ul>
         <li
@@ -40,10 +40,9 @@ export default Vue.extend({
     };
   },
   props: {
-    list: {
+    data: {
       type: Object,
-      value: {},
-      list: Array
+      value: {}
     },
     current: {
       type: String,
@@ -57,7 +56,7 @@ export default Vue.extend({
       }
     },
     data(){
-      if (Object.keys(this.list).length){
+      if (Object.keys(this.data).length){
         new LazyLoad(this.$refs.scrollEle);
       }
     }

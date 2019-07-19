@@ -6,7 +6,7 @@
     <div class="l-type" v-for="(item,index) in Lists.list" :key="index">
       <p class="tip">{{item.exhaust_str}}/{{item.max_power_str}} {{item.inhale_type}}</p>
       <ul>
-        <li>
+        <li @click="switchType(item.car_id)">
           <p><span>{{item.market_attribute.year}}款 {{item.car_name}}</span><span>{{item.market_attribute.dealer_price_min}}</span></p>
           <p><span>{{item.horse_power}}马力{{item.gear_num}}档{{item.trans_type}}</span><span>指导价 {{item.market_attribute.dealer_price_max}}</span></p>
         </li>
@@ -30,10 +30,21 @@ export default Vue.extend({
   computed: {
     ...mapState({
       Lists: (state: any) => state.list.list
-    }),
+    })
   },
   methods: {
-    
+    ...mapActions({
+      getLocation: "carDetail/getLocation",
+      getCarDetail: "carDetail/getCarDetail"
+    }),
+    switchType(id:any){
+      this.getLocation();
+      this.$router.push({path:'/ask'});
+      this.getCarDetail({
+        carId: id,
+        cityId: 201
+      })
+    }
   },
   created(){
   }

@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <myList :list="brandList" :current="current" /> 
+    <myList :data="brandList" :current="current" /> 
     <sideBar :title="letterList" :current.sync="current" /> 
   </div>
 </template>
