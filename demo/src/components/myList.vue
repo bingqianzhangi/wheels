@@ -9,7 +9,7 @@
           class="border-bottom"
           @click="btn(value.MasterID)"
         >
-          <img :src="value.CoverPhoto" :alt="value.Name" />
+          <img :src="origin" :data-src="value.CoverPhoto" :alt="value.Name" />
           <span>{{value.Name}}</span>
         </li>
       </ul>
@@ -21,6 +21,8 @@
 <script lang="ts">
 import Vue from "vue";
 import Mock from "./mock.vue";
+import LazyLoad from '@/utils/lazyLoad';
+import origin from '@/assets/1px.jpg';
 import { mapState, mapActions, mapMutations } from "vuex";
 export default Vue.extend({
   components: {
@@ -33,7 +35,8 @@ export default Vue.extend({
     return {
       isTrue,
       MasterID,
-      phone
+      phone,
+      origin
     };
   },
   props: {
@@ -51,6 +54,11 @@ export default Vue.extend({
     current(val){
       if(val){
         this.$refs.scrollEle.scrollTop = this.$refs[val][0].offsetTop;
+      }
+    },
+    data(){
+      if (Object.keys(this.list).length){
+        new LazyLoad(this.$refs.scrollEle);
       }
     }
   },

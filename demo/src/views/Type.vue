@@ -3,12 +3,12 @@
     <div class="c-type">
       <span>2019</span>
     </div>
-    <div class="l-type">
-      <p class="tip">1.5L/135kW 涡轮增压</p>
+    <div class="l-type" v-for="(item,index) in Lists.list" :key="index">
+      <p class="tip">{{item.exhaust_str}}/{{item.max_power_str}} {{item.inhale_type}}</p>
       <ul>
         <li>
-          <p><span>2019款 改款 C 260 L 运动轿车</span><span>26.88万起</span></p>
-          <p><span>184马力9档手自一体</span><span>指导价 34.68万</span></p>
+          <p><span>{{item.market_attribute.year}}款 {{item.car_name}}</span><span>{{item.market_attribute.dealer_price_min}}</span></p>
+          <p><span>{{item.horse_power}}马力{{item.gear_num}}档{{item.trans_type}}</span><span>指导价 {{item.market_attribute.dealer_price_max}}</span></p>
         </li>
       </ul>
     </div>
@@ -28,8 +28,12 @@ export default Vue.extend({
   components: {
   },
   computed: {
+    ...mapState({
+      Lists: (state: any) => state.list.list
+    }),
   },
   methods: {
+    
   },
   created(){
   }

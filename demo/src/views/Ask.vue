@@ -60,7 +60,7 @@
           </ul>
         </div>   
       </div>
-      <div class="result">
+      <div :class="['result',{'style':result}]">
         <div class="cont">
           <img src="http://h5.chelun.com/2017/official/img/q-icon.png" alt="">
           <p>询价成功</p>
@@ -85,7 +85,6 @@
 import Vue from 'vue';
 import {mapActions, mapState} from 'vuex';
 import cityList from '@/components/cityList.vue'; 
-
 export default Vue.extend({
   name: 'ask',
   data() {
@@ -144,7 +143,7 @@ export default Vue.extend({
     selectType(id: String){
       this.$router.push({ path: "/type", query: { curId: id } })
     },
-    lookPrice(){
+    async lookPrice(){
       if(!this.name){
         this.prompt = '请输入真实的中文姓名';
         this.flag = true;
@@ -161,7 +160,7 @@ export default Vue.extend({
         this.flag = true;
         return;
       }
-      this.sendAsk({
+      let data= await this.sendAsk({
         carid:this.carDetailList.details.car_id,
         mobile:this.tel,
         dealerids:this.dealeridList.join()||'',
@@ -177,7 +176,9 @@ export default Vue.extend({
         cl_from:null,
         _: 1563463003573
       })
-      this.result = true;
+      if(data.code==1){
+        this.result = true;
+      }
     },
     ok(){
       this.flag = false;
@@ -543,13 +544,13 @@ export default Vue.extend({
   .result{
     top: 0;
     position: fixed;
-    z-index: 0;
+    z-index: 201;
     width: 100%;
     height: 100%;
     text-align: center;
     background: rgba(0,0,0,.5);
     display: -webkit-box;
-    display: flex;
+    display: none;
     -webkit-box-align: center;
     align-items: center;
     -webkit-box-pack: center;
@@ -562,7 +563,11 @@ export default Vue.extend({
       border-radius: .2rem;
       padding: .3rem .3rem 0;
       text-align: center;
-      display: inline-block;
+      position: absolute;
+      top: 50%;
+      margin-left: -42%;
+      margin-top: -20%;
+      left: 50%;
       width: 76%;
       overflow: hidden;
       img:first-child{
@@ -600,6 +605,9 @@ export default Vue.extend({
     }
   }
   .accord{
+    display: block;
+  }
+  .style{
     display: block;
   }
 </style>
