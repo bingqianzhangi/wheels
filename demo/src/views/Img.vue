@@ -23,14 +23,20 @@
           <img :src="i" alt />
         </li>
       </div>
-      
     </div>
+
+    <ImgMock  :imgList='jumpimgList' />
+
   </div>
 </template>
 <script lang="ts">
 import Vue from "vue";
 import { mapActions, mapState } from "vuex";
+import ImgMock from '@/components/ImgMock.vue'
 export default Vue.extend({
+  components:{
+    ImgMock
+  },
   data() {
     let phone: string = "_1563235046613";
     // Page=1&PageSize=30&_1563368605799
