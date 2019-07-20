@@ -613,6 +613,7 @@ export default Vue.extend({
     display: block;
   }
   .style{
+    top: 0;
     display: block;
   }
 </style>
