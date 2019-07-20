@@ -36,7 +36,7 @@
         <div class="dealer-info">
           <p class="tip">选择报价经销商</p>
           <ul>
-            <li class="" v-for="item in carDetailList.list" :key="item.dealerId" @click="dealerids(item.dealerId)">
+            <li :class="item.typ?'active':''" v-for="item in carDetailList.list" :key="item.dealerId" @click="dealerids(item.dealerId)">
               <p><span>{{item.dealerShortName}}</span><span>{{parseInt(item.promotePrice)}}万</span></p>
               <p><span>{{item.address}}</span><span>{{item.saleRange}}</span></p>
             </li>
@@ -185,7 +185,12 @@ export default Vue.extend({
     },
     dealerids(id){
       this.dealeridList.push(id);
-      console.log(this.carDetailList.list)
+      let a=this.carDetailList.list.map(item=>{
+        if(item.dealerId==id){
+          return item.typ=!item.typ;
+        }
+      })
+      console.log(a)
     },
     sure(){
       this.result = false;
