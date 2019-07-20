@@ -547,7 +547,7 @@ export default Vue.extend({
     }
   }
   .result{
-    top: 0;
+    // top: 0;
     position: fixed;
     z-index: 201;
     width: 100%;
