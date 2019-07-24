@@ -37,6 +37,7 @@ const mutations = {
       i.Url=string
       state.imgList.push(i.Url)
     })
+    console.log("imgList.", state.imgList)
   },
   GetImg(state: any, payload: any) {
     let string=''
