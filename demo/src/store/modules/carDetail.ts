@@ -34,7 +34,6 @@ const actions = {
   async sendAsk({commit}: {commit: Function}, payload: any): Promise<void>{
     let data:any = await askPrice(payload);
     return data;
-    // commit('updateResult', data.code);
   }
 }
 
@@ -50,10 +49,7 @@ const mutations = {
   },
   updateCityDetail(state: any, payload: Array<Object>){
     state.cityDetail=payload;
-  },
-  // updateResult(state: any, payload: Number){
-  //   state.code=payload;
-  // }
+  }
 }
 
 export default {
